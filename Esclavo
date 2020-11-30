@@ -1,0 +1,117 @@
+##Jonatan Jacome
+##deber4
+
+#include <Wire.h> 
+char palabra;
+char x;  // valor ingresado
+String y; // letra asignada
+String z;  // dato recibido
+void setup() {
+Wire.begin(4);
+Serial.begin(9600);
+Wire.onReceive(receiveEvent); //recepcion de mensajes
+Wire.onRequest(requestEvent);// envio de mensajes
+}
+void loop() {
+  delay(200); 
+}
+void receiveEvent(int bytes){ 
+while(Wire.available()){
+  palabra=Wire.read();  
+  switch(palabra){// comparativa del valor del dato
+   case 'a':
+    y=y+"@"; // cambiar a por @
+    break;
+    case 'b':
+    y=y+"b"; 
+    break;
+    case 'c':
+    y=y+"c";
+    break;
+    case 'd':
+    y=y+"d";
+    break;
+    case 'e':
+    y=y+"#"; // cambiar e por  #
+    break;
+    case 'f':
+    y=y+"f";
+    break;
+    case 'g':
+    y=y+"g";
+    break;
+    case 'h':
+    y=y+"h";
+    break;
+    case 'i':
+    y=y+"!"; //cambiar i por !
+    break;
+    case 'j':
+    y=y+"j";
+    break;
+    case 'k':
+    y=y+"k";
+    break;
+    case 'l':
+    y=y+"l";
+    break;
+    case 'm':
+    y=y+"m";
+    break;
+    case 'n':
+    y=y+"n";
+    break;
+    case 'o':
+    y=y+"*"; //cambiar o por *
+    break;
+    case 'p':
+    y=y+"p";
+    break;
+    case 'q':
+    y=y+"q";
+    break;
+    case 'r':
+    y=y+"r";
+    break;
+    case 's':
+    y=y+"s";
+    break;
+    case 't':
+    y=y+"t";
+    break;
+    case 'u':
+    y=y+"$"; //cambiar u por $
+    break;
+    case 'v':
+    y=y+"v";
+    break;
+    case 'w':
+    y=y+"w";
+    break;
+    case 'x':
+    y=y+"x";
+    break;
+    case 'y':
+    y=y+"y";
+    break;
+    case 'z':
+    y=y+"z";
+    break;
+    }
+    
+   }
+      Serial.println(y);
+          while(Serial.available()>0) {
+            z=Serial.read();//
+                                    }
+}
+
+void requestEvent() {
+  while(Serial.available()>0){
+    x=Serial.read(); 
+    Serial.println("dato enviado");  
+        Wire.beginTransmission(4); r 
+        Wire.write(x);
+        Wire.endTransmission();  
+  }
+}
