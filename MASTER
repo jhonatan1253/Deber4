@@ -1,25 +1,39 @@
 ####Jhonatann Jacome
 ###Deber4
 
-#include <Wire.h> 
+#include <Wire.h>  
+ #include<LiquidCrystal.h>
+ LiquidCrystal lcd(13,12,11,10,9,8);  
 char palabra;
 char x;  // valor ingresado
 String y; // letra asignada
 String z;  // dato recibido
 void setup() {
-Wire.begin(4);
-Serial.begin(9600);
-Wire.onReceive(receiveEvent); //recepcion de mensajes
-Wire.onRequest(requestEvent);// envio de mensajes
+lcd.begin(16,2); 
+Wire.begin();  
+Serial.begin(9600);    
+lcd.setCursor(0,0);
+Wire.onReceive(receiveEvent);  
 }
+
 void loop() {
-  delay(200); 
-}
-void receiveEvent(int bytes){ 
-while(Wire.available()){
-  palabra=Wire.read();  
-  switch(palabra){// comparativa del valor del dato
-   case 'a':
+if(Serial.available()>0){
+    x=Serial.read();  
+     Wire.beginTransmission(4); 
+     Wire.write(x); 
+     Wire.endTransmission();  
+  }
+    lcd.setCursor(2,1); 
+    delay(200); 
+    lcd.println(z);
+    delay(1000);
+            }
+
+void receiveEvent(){ 
+        while(Wire.available()){ 
+          palabra=Wire.read(); 
+                switch(palabra){ 
+                    case 'a':
     y=y+"@"; // cambiar a por @
     break;
     case 'b':
@@ -98,20 +112,16 @@ while(Wire.available()){
     y=y+"z";
     break;
     }
-    
    }
-      Serial.println(y);
-          while(Serial.available()>0) {
-            z=Serial.read();//
-                                    }
-}
-
-void requestEvent() {
-  while(Serial.available()>0){
-    x=Serial.read(); 
-    Serial.println("dato enviado");  
-        Wire.beginTransmission(4); r 
-        Wire.write(x);
-        Wire.endTransmission();  
-  }
+Serial.println(y);
+Wire.requestFrom(4,4);
+while(Serial.available()) {
+Serial.println(" recibido mensaje"); 
+char c=Wire.read(); 
+Serial.println(c);
+lcd.clear();
+lcd.setCursor(2,0); 
+lcd.println(c);
+delay(1000);
+   }
 }
